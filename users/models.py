@@ -1,5 +1,7 @@
 from django.contrib.auth.models import AbstractUser
+from materials.models import Course, Lesson
 from django.db import models
+
 
 # Create your models here.
 class User(AbstractUser):
@@ -18,3 +20,22 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class Payment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь')
+    payment_date = models.DateField(verbose_name='Дата оплаты')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Оплаченный курс', blank=True, null=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Оплаченный урок', blank=True, null=True)
+    amount_payment = models.DecimalField(decimal_places=2, max_digits=20, verbose_name='сумма оплаты')
+    type_payment = models.CharField(max_length=50,  verbose_name='способ оплаты',
+                                    choices=[
+                                            ('CASH', 'Оплата наличными'),
+                                            ('CARD', 'Оплата картой')
+                                            ]
+                                    )
+
+    class Meta:
+        verbose_name = 'Оплата'
+        ordering = ('-payment_date',)
+ 
