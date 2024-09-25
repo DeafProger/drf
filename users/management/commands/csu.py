@@ -5,7 +5,7 @@ from users.models import User
 class Command(BaseCommand):
     def handle(self, *args, **options):
 
-        User.objects.all().delete()
+        # User.objects.all().delete()
 
         user = User.objects.create(email='q')
         user.set_password('q')
