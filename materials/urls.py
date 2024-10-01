@@ -3,7 +3,7 @@ from materials.apps import MaterialsConfig
 from django.urls import path
 from materials.views import LessonDestroyView, LessonCreateApiView, \
     CourseViewSet, LessonListView, LessonRetrieveView, LessonUpdateView
-    
+
 
 router = DefaultRouter()
 router.register(r'course', CourseViewSet, basename='course')

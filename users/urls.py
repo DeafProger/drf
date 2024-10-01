@@ -1,7 +1,7 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import PaymentListView, UserUpdateView, \
     UserListView, UserCreateView, UserDetailView, UserDeleteView
-from users.apps import UsersConfig
+from users.apps  import UsersConfig
 from django.urls import path
 
 
