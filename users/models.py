@@ -42,6 +42,18 @@ class Payment(models.Model):
                                     )
 
     class Meta:
-        verbose_name = 'Оплата'
+        verbose_name = 'Платеж'
+        verbose_name_plural = 'Платежи'
         ordering = ('-payment_date',)
  
+
+class Subscription(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='user')
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Курс')
+
+    def __str__(self):
+        return f"{self.user} {self.course}"
+
+    class Meta:
+        verbose_name = 'Подписка'
+        verbose_name_plural = 'Подписки'

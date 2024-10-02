@@ -1,10 +1,13 @@
-from users.serializers import UserSerializer, PaymentSerializer, UserDetailSerializer
+from users.serializers import UserSerializer, PaymentSerializer, UserDetailSerializer, SubscriptionSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.generics import get_object_or_404
 from rest_framework.filters import OrderingFilter
 from rest_framework.response import Response
 from rest_framework import generics, status
-from users.models import User, Payment
+from users.models import User, Payment, Subscription
+from rest_framework.views import APIView
+from materials.models import Course
 
 
 class UserDetailView(generics.RetrieveAPIView):
@@ -61,3 +64,23 @@ class UserListView(generics.ListAPIView):
 class UserDeleteView(generics.DestroyAPIView):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated]
+
+
+class SubscriptionView(APIView):
+    """Контроллер управления подпиской пользователя на курс"""
+    serializer_class = SubscriptionSerializer
+
+    @staticmethod
+    def post(request, pk):
+        queryset = Course.objects.filter(pk=pk)
+        user = request.user
+        course = get_object_or_404(queryset=queryset)
+        subs_item = Subscription.objects.filter(course=course, user=user)
+
+        if subs_item.exists():
+            subs_item.delete()
+            message = 'Подписка удалена'
+        else:
+            Subscription.objects.create(user=user, course=course)
+            message = 'Подписка добавлена'
+        return Response({"message": message})
