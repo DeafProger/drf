@@ -14,5 +14,5 @@ urlpatterns = [
                   path('lesson/list/', LessonListView.as_view(), name='lesson_list'),
                   path('lesson/view/<int:pk>/', LessonRetrieveView.as_view(), name='lesson_view'),
                   path('lesson/update/<int:pk>/', LessonUpdateView.as_view(), name='lesson_update'),
-                  path('lesson/delete/<int:pk>/', LessonDestroyView.as_view(), name='lesson_update'),
+                  path('lesson/delete/<int:pk>/', LessonDestroyView.as_view(), name='lesson_delete'),
               ] + router.urls
