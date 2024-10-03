@@ -1,7 +1,6 @@
 from rest_framework.fields import SerializerMethodField
 from rest_framework.relations import SlugRelatedField
 from materials.validators import url_validator
-from users.models import Subscription
 from materials.models import Course, Lesson
 from rest_framework import serializers
 
@@ -40,6 +39,7 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = '__all__'
 
+
 class CourseDetailSerializer(serializers.ModelSerializer):
     """Сериализатор курсa, включая поля кол-ва уроков и списка уроков"""
     lessons_count = SerializerMethodField()
@@ -56,18 +56,17 @@ class CourseDetailSerializer(serializers.ModelSerializer):
     def get_is_subscribed(self, course):
         return course.subscription_set.filter(user=self.user_()).exists()
 
-        @staticmethod
-        def get_lessons_count(course):
-            return Lesson.objects.filter(course=course).count()
+    @staticmethod
+    def get_lessons_count(course):
+        return Lesson.objects.filter(course=course).count()
 
-        @staticmethod
-        def get_lessons_list(course):
-            return LessonSerializer(Lesson.objects.filter(course=course), many=True).data
+    @staticmethod
+    def get_lessons_list(course):
+        return LessonSerializer(Lesson.objects.filter(course=course), many=True).data
 
-        class Meta:
-            model = Course
-            fields = '__all__'
-
+    class Meta:
+        model = Course
+        fields = '__all__'
 
     class LessonDetailSerializer(serializers.ModelSerializer):
         """Cериализатор информации об уроке, где для курса выводится его наименование"""
