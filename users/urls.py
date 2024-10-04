@@ -1,6 +1,6 @@
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users.views import PaymentListView, UserUpdateView, SubscriptionView,\
-    UserListView, UserCreateView, UserDetailView, UserDeleteView
+    UserListView, UserCreateView, UserDetailView, UserDeleteView, PaymentCreateView
 from users.apps  import UsersConfig
 from django.urls import path
 
@@ -19,5 +19,6 @@ urlpatterns = [
 
                 path('subscr/<int:pk>/', SubscriptionView.as_view(), name='subscr_switch'),
 
+                path('payment/create/', PaymentCreateView.as_view(), name='payment_create'),
                 path('payment/', PaymentListView.as_view(), name='payment_list'),
               ]
