@@ -28,3 +28,10 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = '__all__'
+
+class PaymentCreateSerializer(serializers.ModelSerializer):
+    """Cериализатор для создания платежа"""
+
+    class Meta:
+        model = Payment
+        fields = ('payment_url')

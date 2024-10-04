@@ -1,4 +1,5 @@
-from users.serializers import UserSerializer, PaymentSerializer, UserDetailSerializer, SubscriptionSerializer
+from users.serializers import UserSerializer, PaymentSerializer, \
+    UserDetailSerializer, SubscriptionSerializer, PaymentCreateSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.generics import get_object_or_404
@@ -8,6 +9,10 @@ from rest_framework import generics, status
 from users.models import User, Payment, Subscription
 from rest_framework.views import APIView
 from materials.models import Course
+
+from services import get_session
+from config import settings
+import stripe
 
 
 class UserDetailView(generics.RetrieveAPIView):
@@ -82,3 +87,18 @@ class SubscriptionView(APIView):
             Subscription.objects.create(user=request.user, course=course)
             message = 'Подписка добавлена'
         return Response({"message": message})
+
+class PaymentCreateView(generics.CreateAPIView):
+    serializer_class = PaymentCreateSerializer
+    permission_classes = [AllowAny]
+
+    def perform_create(self, serializer):
+        new_payment = serializer.save()
+        stripe.api_key = settings.STRIPE_API_KEY
+        response = get_session()
+        new_payment.session_id = response['id']
+        new_payment.payment_url = response['url']
+        new_payment.payment_status = response['payment_status']
+        new_payment.payment_amount = response['amount_total']
+        new_payment.save()
+        return super().perform_create(serializer)
