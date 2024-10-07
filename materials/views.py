@@ -4,6 +4,8 @@ from users.permissions import IsModerator, IsOwner
 from rest_framework import viewsets, generics
 from materials.models import Course, Lesson
 
+from materials.tasks import send_update_info_task
+
 
 class CourseViewSet(viewsets.ModelViewSet):
     default_serializer = CourseSerializer
@@ -30,7 +32,15 @@ class CourseViewSet(viewsets.ModelViewSet):
         new_course.owner = self.request.user
         new_course.save()
 
+    def perform_update(self, serializer):
+        """Отправляем уведомление всем подписанным пользователям"""
+        updated_course = serializer.save()
+        subject = f'Обновление курса {updated_course.name}'
+        message = 'По Вашей подписке есть обновление'
+        send_update_info_task.delay(updated_course.id, subject, message)
+        updated_course.save()
 
+                             
 class LessonCreateApiView(generics.CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [~IsModerator]
