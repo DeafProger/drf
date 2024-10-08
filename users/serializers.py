@@ -1,4 +1,3 @@
-from rest_framework.fields import SerializerMethodField
 from users.models import Payment, User, Subscription
 from rest_framework import serializers
 
@@ -28,6 +27,7 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = '__all__'
+
 
 class PaymentCreateSerializer(serializers.ModelSerializer):
     """Cериализатор для создания платежа"""

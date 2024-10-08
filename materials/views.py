@@ -40,7 +40,7 @@ class CourseViewSet(viewsets.ModelViewSet):
         send_update_info_task.delay(updated_course.id, subject, message)
         updated_course.save()
 
-                             
+
 class LessonCreateApiView(generics.CreateAPIView):
     serializer_class = LessonSerializer
     permission_classes = [~IsModerator]

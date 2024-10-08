@@ -49,7 +49,6 @@ class LessonTestCase(APITestCase):
                                         password='qwerty', role='moderator')
         self.client.force_authenticate(user=moderator)
 
-
         path = reverse('materials:lesson_delete', [self.lesson.id])
         response = self.client.delete(path)
 
