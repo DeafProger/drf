@@ -88,6 +88,7 @@ class SubscriptionView(APIView):
             message = 'Подписка добавлена'
         return Response({"message": message})
 
+
 class PaymentCreateView(generics.CreateAPIView):
     serializer_class = PaymentCreateSerializer
     permission_classes = [AllowAny]

@@ -34,18 +34,18 @@ class Payment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, verbose_name='Оплаченный курс', blank=True, null=True)
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, verbose_name='Оплаченный урок', blank=True, null=True)
     amount_payment = models.DecimalField(decimal_places=2, max_digits=20, verbose_name='сумма оплаты')
-    type_payment = models.CharField(max_length=50,  verbose_name='способ оплаты',
+    type_payment = models.CharField(max_length=50, verbose_name='способ оплаты',
                                     choices=[
-                                            ('CASH', 'Оплата наличными'),
-                                            ('CARD', 'Оплата картой')
+                                             ('CASH', 'Оплата наличными'),
+                                             ('CARD', 'Оплата картой')
                                             ]
-                                    )
+                                   )
 
     class Meta:
         verbose_name = 'Платеж'
         verbose_name_plural = 'Платежи'
         ordering = ('-payment_date',)
- 
+
 
 class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Пользователь', related_name='user')
