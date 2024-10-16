@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     # 'django_filters',
     # 'drf_yasg',
 
-    # 'materials',
+    'habits',
     'users',
 ]
 
