@@ -1,8 +1,0 @@
-.\celery.py:14:80: E501 line too long (88 > 79 characters)
-.\settings.py:104:80: E501 line too long (91 > 79 characters)
-.\settings.py:107:80: E501 line too long (81 > 79 characters)
-.\settings.py:110:80: E501 line too long (82 > 79 characters)
-.\settings.py:113:80: E501 line too long (83 > 79 characters)
-.\settings.py:175:80: E501 line too long (101 > 79 characters)
-.\urls.py:42:80: E501 line too long (98 > 79 characters)
-.\urls.py:43:80: E501 line too long (89 > 79 characters)

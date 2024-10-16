@@ -7,7 +7,8 @@ class User(AbstractUser):
     """Модель пользователя, авторизация по email"""
     username = None
     email = models.EmailField(unique=True, verbose_name='Почта')
-    tg_id = models.CharField(max_length=30, verbose_name='ТелеграмID', blank=True, null=True)
+    tg_id = models.CharField(max_length=30, verbose_name='ТелеграмID',
+                             blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
