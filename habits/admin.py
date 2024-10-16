@@ -1,3 +1,7 @@
-# from django.contrib import admin
+from django.contrib import admin
+from habits.models import Habit
 
-# Register your models here.
+
+@admin.register(Habit)
+class HabitsAdmin(admin.ModelAdmin):
+    list_display = ["pk", "user", "place", "time", "action"]

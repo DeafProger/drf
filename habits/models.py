@@ -8,7 +8,7 @@ class Habit(models.Model):
     PERIODICITY_CHOICES = [(1, 'Every day'), (2, 'Every work day'),
                            (3, 'Every weekend'), (4, 'Every week')]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='User',
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='Owner',
                              on_delete=models.CASCADE, related_name='user')
     place = models.CharField(max_length=50, verbose_name='Место')
     time = models.TimeField(verbose_name='Время')
