@@ -1,8 +1,7 @@
-from users.models import User, Payment, Subscription
 from django.contrib import admin
+from users.models import User
 
 
-# Register your models here.
-admin.site.register(Subscription)
-admin.site.register(Payment)
-admin.site.register(User)
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('email', 'id', 'is_active')
