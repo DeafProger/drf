@@ -43,10 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework_simplejwt',
-    # 'django_celery_beat',
+    'django_celery_beat',
     'rest_framework',
     'django_filters',
-    # 'drf_yasg',
+    "corsheaders",
+    'drf_yasg',
 
     'habits',
     'users',
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -160,8 +162,6 @@ SIMPLE_JWT = {
     'UPDATE_LAST_LOGIN': True,
 }
 
-STRIPE_API_KEY = os.getenv('STRIPE_API_KEY')
-
 # Настройки для Celery
 
 # URL-адрес брокера сообщений Redis (по умолчанию порт 6379)
@@ -180,8 +180,17 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_SSL = True
+# ----------------------------------------------------------------------
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+]
+
+CORS_ALLOW_ALL_ORIGINS = False
