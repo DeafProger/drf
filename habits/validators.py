@@ -59,8 +59,9 @@ class DurationTimeValidator:
         self.field = field
 
     def __call__(self, value):
-        period_time = dict(value).get(self.field)
-        if period_time and int(period_time) >= 120:
+        period_time = value.get('duration')
+
+        if period_time and period_time.seconds >= 120:
             raise ValidationError(
                 "Время выполнения привычки должно быть не больше 120 секунд."
             )
@@ -74,9 +75,10 @@ class PeriodicityValidator:
         self.field = field
 
     def __call__(self, value):
-        periodicity = dict(value).get(self.field)
+        periodicity = value.get('periodicity')
+
         if periodicity:
-            if not 1 <= int(periodicity) <= 7:
+            if not 1 <= periodicity <= 7:
                 raise ValidationError(
                     "Нельзя выполнять привычку реже, чем 1 раз в 7 дней"
                 )
