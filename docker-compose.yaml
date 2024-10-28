@@ -1,46 +1,42 @@
 version: '3'
 
 services:
-
   redis:
     image: redis:latest
     restart: on-failure
     expose:
       - '6379'
-
   db:
     image: postgres
     restart: on-failure
-    env_file:
-      - .env
     expose:
       - '5432'
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
     healthcheck:
-      test: [ 'CMD-SHELL', '-c', 'pg_isready -U $POSTGRES_USER' ]
+      test: ['CMD-SHELL', '-c', 'pg_isready -U $POSTGRES_USER']
       interval: 10s
       retries: 5
       timeout: 5s
-
   app:
     build: .
     tty: true
     ports:
-      - '8000:8000'
-    command: sh -c 'python manage.py migrate && python manage.py runserver 0.0.0.0:8000'
+      - "8000:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - .:/app
     env_file:
       - .env
-
   celery:
     build: .
     tty: true
-    command: celery -A config worker -l INFO -P eventlet
+    command: celery -A config worker -l INFO
     restart: on-failure
     volumes:
       - .:/app
@@ -50,11 +46,10 @@ services:
       - db
     env_file:
       - .env
-
   celery-beat:
     build: .
     tty: true
-    command: celery -A config beat -l info -S django
+    command: celery -A config beat -l INFO
     restart: on-failure
     volumes:
       - .:/app
@@ -64,6 +59,5 @@ services:
       - db
     env_file:
       - .env
-
 volumes:
   pg_data:
