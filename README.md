@@ -1,9 +1,17 @@
-## Задачи
+* Клонирование проекта
 
-1. Опишите Dockerfile для запуска контейнера с проектом.
-   
-2. Оберните в Docker Compose Django-проект с БД PostgreSQL.
+`git clone git@github.com:DeafProger/drf.git`
 
-3. Допишите в docker-compose.yaml работу с Redis.
+Заполните файл .env своими данным по примеру .env.sample
 
-4. Допишите в docker-compose.yaml работу с Celery.
+
+Сборка и запуск контейнеров
+
+`docker-compose up --build`
+
+* Регистрация нового пользователя - http://127.0.0.1:8000/register/ {POST}
+* Получение токена - http://127.0.0.1:8000/login/
+* Создание привычки - http://127.0.0.1:8000/habits/create/
+* Документация: 
+* Swagger - http://127.0.0.1:8000/swagger/
+* Redoc - http://127.0.0.1:8000/redoc/
