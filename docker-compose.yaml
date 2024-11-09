@@ -16,7 +16,7 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: ['CMD-SHELL', '-c', 'pg_isready -U $POSTGRES_USER']
+      test: ['CMD-SHELL', '-c', 'pg_isready -U $DB_USER']
       interval: 10s
       retries: 5
       timeout: 5s
@@ -27,7 +27,7 @@ services:
       - "8000:8000"
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
-      - .:/app
+      - .:/coursework
     depends_on:
       db:
         condition: service_healthy
@@ -39,7 +39,7 @@ services:
     command: celery -A config worker -l INFO
     restart: on-failure
     volumes:
-      - .:/app
+      - .:/coursework
     depends_on:
       - redis
       - app
@@ -52,7 +52,7 @@ services:
     command: celery -A config beat -l INFO
     restart: on-failure
     volumes:
-      - .:/app
+      - .:/coursework
     depends_on:
       - redis
       - app

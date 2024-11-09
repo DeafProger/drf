@@ -2,13 +2,13 @@
 FROM python:3
 
 # Устанавливаем рабочую директорию в контейнере
-WORKDIR /app
+WORKDIR /coursework
 
 # Копируем зависимости в контейнер
-COPY ./requirements.txt /app/
+COPY ./requirements.txt /coursework/
 
 # Устанавливаем зависимости
-RUN pip install -r /app/requirements.txt
+RUN pip install -r /coursework/requirements.txt
 
 # Копируем код приложения в контейнер
 COPY . .
